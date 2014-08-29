@@ -10,6 +10,8 @@
 		8362964D19A4650300272B77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8362964C19A4650300272B77 /* Foundation.framework */; };
 		8362965019A4650300272B77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8362964F19A4650300272B77 /* main.m */; };
 		8362965419A4650300272B77 /* charterCommandLine.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8362965319A4650300272B77 /* charterCommandLine.1 */; };
+		8362965C19A4683300272B77 /* CharterParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8362965B19A4683300272B77 /* CharterParser.m */; };
+		83B610F919B0E495002C6D5C /* svgObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B610F819B0E495002C6D5C /* svgObjects.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +33,10 @@
 		8362964F19A4650300272B77 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8362965219A4650300272B77 /* charterCommandLine-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "charterCommandLine-Prefix.pch"; sourceTree = "<group>"; };
 		8362965319A4650300272B77 /* charterCommandLine.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = charterCommandLine.1; sourceTree = "<group>"; };
+		8362965A19A4683300272B77 /* CharterParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharterParser.h; sourceTree = "<group>"; };
+		8362965B19A4683300272B77 /* CharterParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharterParser.m; sourceTree = "<group>"; };
+		83B610F719B0E495002C6D5C /* svgObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgObjects.h; sourceTree = "<group>"; };
+		83B610F819B0E495002C6D5C /* svgObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = svgObjects.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +54,8 @@
 		8362964019A4650300272B77 = {
 			isa = PBXGroup;
 			children = (
+				83B610F719B0E495002C6D5C /* svgObjects.h */,
+				83B610F819B0E495002C6D5C /* svgObjects.m */,
 				8362964E19A4650300272B77 /* charterCommandLine */,
 				8362964B19A4650300272B77 /* Frameworks */,
 				8362964A19A4650300272B77 /* Products */,
@@ -74,6 +82,8 @@
 			isa = PBXGroup;
 			children = (
 				8362964F19A4650300272B77 /* main.m */,
+				8362965A19A4683300272B77 /* CharterParser.h */,
+				8362965B19A4683300272B77 /* CharterParser.m */,
 				8362965319A4650300272B77 /* charterCommandLine.1 */,
 				8362965119A4650300272B77 /* Supporting Files */,
 			);
@@ -139,7 +149,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8362965C19A4683300272B77 /* CharterParser.m in Sources */,
 				8362965019A4650300272B77 /* main.m in Sources */,
+				83B610F919B0E495002C6D5C /* svgObjects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +265,7 @@
 				8362965919A4650300272B77 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
