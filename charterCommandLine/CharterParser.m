@@ -232,12 +232,12 @@
     NSSize chartDim = (firstBlockParameters[@"chartDimensions"]) ? NSMakeSize(600,400) : NSMakeSize(200, 200);
     NSString *svgStart = [svgObjects beginSVGCanvas:chartDim];
     
-    svgStart = [svgStart stringByAppendingString:[NSString stringWithFormat:@"<svg width=\"%.0f\" height=\"%.0f\" x=\"%.0f\" y=\"%.0f fill=blue>", chartDim.width, chartDim.height, .05*chartDim.width, .95*chartDim.height]];
-    svgStart = [svgStart stringByAppendingString:[svgObjects rectCenteredAtPoint:NSMakePoint(chartDim.width/2, chartDim.height/2) withSize:chartDim]];
+//    svgStart = [svgStart stringByAppendingString:@"<rect width=\"100%\" height=\"100%\" style=\"fill:rgb(200,229,222);stroke-width:3;stroke:rgb(0,0,0)\" />"];
+    
     //I should add chart only portion canvas here, with a touch of color to see it
     NSPoint maxPoint = [secondBlockParameters[@"maxPoint"] pointValue];
     NSPoint minPoint = [secondBlockParameters[@"minPoint"] pointValue];
- 
+    svgStart = [svgStart stringByAppendingString:[svgObjects mainChartCanvasFromChartSize:chartDim]];
     NSLog(@"maxpoint: %@", NSStringFromPoint(maxPoint));
     NSLog(@"min: %@", NSStringFromPoint(minPoint));
     

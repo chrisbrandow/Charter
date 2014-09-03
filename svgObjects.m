@@ -12,7 +12,7 @@
 
 + (NSString *)pointAtPoint:(NSPoint)p {
     
-        return [NSString stringWithFormat:@"<circle cx=\"%.0f%%\" cy=\"%.0f%%\" r=\"4\" />", p.x, p.y];
+        return [NSString stringWithFormat:@"<circle cx=\"%.0f%%\" cy=\"%.0f%%\" r=\"4\" />", p.x, p.y] ;
 
 }
 
@@ -25,8 +25,19 @@
 
 + (NSString *)beginSVGCanvas:(NSSize)size {
     
-    return [NSString stringWithFormat:@"<svg width=\"%.0f\" height=\"%.0f\" fill=red>", size.width, size.height];
+    return [[NSString stringWithFormat:@"<svg width=\"%.0f\" height=\"%.0f\" fill=red>", size.width, size.height] stringByAppendingString:@"<rect width=\"100%\" height=\"100%\" style=\"fill:rgb(200,229,222);stroke-width:3;stroke:rgb(0,0,0)\" />"];
     
+}
+
++ (NSString *)mainChartCanvasFromChartSize:(NSSize)size {
+    
+    CGFloat minDimension = MIN(size.width, size.height);
+    CGFloat axisBorder = 0.1*minDimension;
+    CGFloat titleBorder = axisBorder;
+    NSLog(@"maxdimension: %.2f", minDimension);
+    //<svg width="540" height="360" x="40" y="0" fill=red>
+    return [[NSString stringWithFormat:@"<svg width=\"%.0f\" height=\"%.0f\" x=\"%.0f\" y=\"%.0f\" fill=green>", size.width - axisBorder, size.height-axisBorder-titleBorder, axisBorder, titleBorder] stringByAppendingString:@"<rect width=\"100%\" height=\"100%\" style=\"fill:rgb(200,129,222);stroke-width:3;stroke:rgb(0,0,0)\" />"];
+
 }
 
 + (NSString *)svgPointFromPoint:(NSPoint)point minPoint:(NSPoint)minPoint andMaxPoint:(NSPoint)maxPoint {

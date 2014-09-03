@@ -16,4 +16,5 @@
 + (NSString *)beginSVGCanvas:(NSSize)size;
 + (NSString *)svgPointFromPoint:(NSPoint)point minPoint:(NSPoint)minPoint andMaxPoint:(NSPoint)maxPoint;
 
++ (NSString *)mainChartCanvasFromChartSize:(NSSize)size;
 @end
