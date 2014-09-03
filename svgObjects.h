@@ -11,6 +11,8 @@
 @interface svgObjects : NSObject
 
 + (NSString *)pointAtPoint:(NSPoint)p;
++ (NSString *)rectCenteredAtPoint:(NSPoint)p withSize:(NSSize)size;
+
 + (NSString *)beginSVGCanvas:(NSSize)size;
 + (NSString *)svgPointFromPoint:(NSPoint)point minPoint:(NSPoint)minPoint andMaxPoint:(NSPoint)maxPoint;
 

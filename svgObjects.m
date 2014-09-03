@@ -18,7 +18,8 @@
 
 + (NSString *)rectCenteredAtPoint:(NSPoint)p withSize:(NSSize)size {
     
-    return [NSString stringWithFormat:@"<rect width=\"%.0f\" height=\"%.0f\" x=\"%.0f\" y=\"%.0f\" style=\"fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)\" />", size.width, size.height, p.x, p.y];
+//    return [NSString stringWithFormat:@"<rect width=\"%.0f\" height=\"%.0f\" x=\"%.0f\" y=\"%.0f\" style=\"fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)\" />", size.width, size.height, p.x, p.y];
+    return [NSString stringWithFormat:@"<rect width=\"%.0f%%\" height=\"%.0f%%\" x=\"%.0f%%\" y=\"%.0f%%\" style=\"fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)\" />", 0., 0., 50., 50.];
     
 }
 

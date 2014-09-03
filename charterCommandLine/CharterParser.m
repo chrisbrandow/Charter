@@ -232,8 +232,12 @@
     NSSize chartDim = (firstBlockParameters[@"chartDimensions"]) ? NSMakeSize(600,400) : NSMakeSize(200, 200);
     NSString *svgStart = [svgObjects beginSVGCanvas:chartDim];
     
+    svgStart = [svgStart stringByAppendingString:[NSString stringWithFormat:@"<svg width=\"%.0f\" height=\"%.0f\" x=\"%.0f\" y=\"%.0f fill=blue>", chartDim.width, chartDim.height, .05*chartDim.width, .95*chartDim.height]];
+    svgStart = [svgStart stringByAppendingString:[svgObjects rectCenteredAtPoint:NSMakePoint(chartDim.width/2, chartDim.height/2) withSize:chartDim]];
+    //I should add chart only portion canvas here, with a touch of color to see it
     NSPoint maxPoint = [secondBlockParameters[@"maxPoint"] pointValue];
     NSPoint minPoint = [secondBlockParameters[@"minPoint"] pointValue];
+ 
     NSLog(@"maxpoint: %@", NSStringFromPoint(maxPoint));
     NSLog(@"min: %@", NSStringFromPoint(minPoint));
     
@@ -242,7 +246,13 @@
         svgStart = [svgStart stringByAppendingString:[svgObjects svgPointFromPoint:[p pointValue] minPoint:minPoint andMaxPoint:maxPoint]];
 
     }
+    /*what I am going for:
+     starts after arrow -><svg width="600" height="400" fill=red>
+     <rect width="100%" height="100%" style="fill:rgb(200,229,222);stroke-width:3;stroke:rgb(0,0,0)" /><svg width="570" height="360" x="30" y="0" fill=red>
+     <rect width="100%" height="100%" style="fill:rgb(100,129,222);stroke-width:3;stroke:rgb(0,0,0)" /><circle cx="5%" cy="95%" r="4" /><circle cx="34%" cy="34%" r="4" /><circle cx="66%" cy="67%" r="4" /><circle cx="95%" cy="5%" r="4" /></svg></svg><-starts before arrow
+*/
     
+    svgStart = [svgStart stringByAppendingString:@"</svg>"];
     svgStart = [svgStart stringByAppendingString:@"</svg>"];
 
     return svgStart;
