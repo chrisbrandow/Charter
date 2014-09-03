@@ -60,7 +60,7 @@
         NSLog(@"sVGSDDADFS %@", SVGForPlot);
         NSLog(@"first params: %@", firstBlockParameters);
         NSLog(@"second params: %@", secondBlockParameters);
-        outputString = [outputString stringByReplacingCharactersInRange:matchRange withString:@"*graph goes here*"]; //fill with a method using both dictionaries
+        outputString = [outputString stringByReplacingCharactersInRange:matchRange withString:SVGForPlot];//] @"*graph goes here*"]; //fill with a method using both dictionaries
         
     }
     
@@ -70,34 +70,58 @@
 
 + (NSDictionary *)parametersFromFirstBlock:(NSString *)firstBlock {
     
+    NSLog(@"lines: %@",[firstBlock componentsSeparatedByString:@"\n"]);
     NSMutableDictionary *firstBlockComponents = [NSMutableDictionary new];
-    
-    [firstBlock enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
-
-        NSError *error = nil;
-        NSUInteger columnHeaderCount = NSNotFound;
-
-        //this needs to accomadate other " mark types
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[“\"”](.+?)[“\"”]" options:NSRegularExpressionDotMatchesLineSeparators error:&error];
-
-
-        if (regex && !error){
-            columnHeaderCount = [regex numberOfMatchesInString:line options:0 range:NSMakeRange(0, line.length)];
-            NSRange titleRange = [regex rangeOfFirstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
-
-            if (columnHeaderCount) {
-                //                NSLog(@"ch count: %zd", columnHeaderCount);
-                NSString *title = [line substringWithRange:titleRange];
-                title = [title substringFromIndex:1];
-                title = [title substringToIndex:title.length-1];
-                firstBlockComponents[@"title"] =  title;// [regex stringByReplacingMatchesInString:line options:0 range:NSMakeRange(0, line.length) withTemplate:@"$1"]; //
+    for (NSString *line in [firstBlock componentsSeparatedByString:@"\n"]) {
+        NSArray *matchArray;
+        
+        if ((matchArray = [self stringsFromMatchesIn:line forRegex:@"[“\"”](.+?)[“\"”]" atIndex:1])) {
+            
+            if (matchArray.count) {
+                firstBlockComponents[@"title"] =  matchArray.firstObject;
             }
             
         }
-    }];
+        
+        
+        if ((matchArray = [self stringsFromMatchesIn:line forRegex:@"^[\\s]*([\\d]+)([\\s]+[\\d]+)*[\\s]*\\z" atIndex:0])) {
+            if (matchArray.count) {
+                firstBlockComponents[@"chartDimensions"] =  matchArray.firstObject;
+            }
+            
+        }
+    }
 
     return firstBlockComponents;
 
+}
+
++ (NSArray *)stringsFromMatchesIn:(NSString *)searchedString forRegex:(NSString *)regexString atIndex:(NSInteger)matchIndex{
+    NSLog(@"searched: %@", searchedString);
+    NSMutableArray *stringsFromMatches = [NSMutableArray new];
+    
+    NSError *error = nil;
+    NSUInteger columnHeaderCount = NSNotFound;
+    NSArray *matches;
+    //this needs to accomadate other " mark types
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexString options:NSRegularExpressionDotMatchesLineSeparators error:&error];
+    
+    if (regex && !error){
+    
+        matches = [regex matchesInString:searchedString options:NSMatchingAnchored range:NSMakeRange(0, searchedString.length)];
+        
+        columnHeaderCount = [regex numberOfMatchesInString:searchedString options:0 range:NSMakeRange(0, searchedString.length)];
+    }
+
+    for (int i ; i < matches.count; i++) {
+        NSRange matchRange = (matchIndex >= 0) ? [matches[i] rangeAtIndex:matchIndex]: [matches[i] range];
+        NSString *chosenMatch = [searchedString substringWithRange:matchRange];
+        NSLog(@"match %@", chosenMatch);
+        
+        [stringsFromMatches addObject:chosenMatch];
+    }
+    
+    return [NSArray arrayWithArray:stringsFromMatches];
 }
 
 + (NSDictionary *)parametersFromSecondBlock:(NSString *)secondBlockText {
@@ -121,7 +145,7 @@
     NSMutableArray *columnHeaders = [NSMutableArray new];
     NSMutableArray *axisParameters = [NSMutableArray new];
 
-    [secondBlockText enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
+    for (NSString *line in [secondBlockText componentsSeparatedByString:@"\n"]) {
         NSScanner *scanner = [NSScanner scannerWithString:line];
 
         NSError *error = nil;
@@ -184,9 +208,12 @@
 
         }
 
-    }];
+    }
 
-
+    
+    secondBlockComponents[@"minPoint"] = [NSValue valueWithPoint:NSMakePoint(xMin, yMin)];
+    secondBlockComponents[@"maxPoint"] = [NSValue valueWithPoint:NSMakePoint(xMax, yMax)];
+    
     secondBlockComponents[@"xMin"] = @(xMin);
     secondBlockComponents[@"xMax"] = @(xMax);
     secondBlockComponents[@"yMin"] = @(yMin);
@@ -201,10 +228,32 @@
 + (NSString *)SVGFromFirstBlockParameters:(NSDictionary *)firstBlockParameters andSecondBlockParameters:(NSDictionary *)secondBlockParameters {
     
     NSArray *points = secondBlockParameters[@"data"];
+
+    NSSize chartDim = (firstBlockParameters[@"chartDimensions"]) ? NSMakeSize(600,400) : NSMakeSize(200, 200);
+    NSString *svgStart = [svgObjects beginSVGCanvas:chartDim];
     
-    NSString *svg = [svgObjects pointAtPoint:[points.firstObject pointValue]];
-    return svg;
+    NSPoint maxPoint = [secondBlockParameters[@"maxPoint"] pointValue];
+    NSPoint minPoint = [secondBlockParameters[@"minPoint"] pointValue];
+    NSLog(@"maxpoint: %@", NSStringFromPoint(maxPoint));
+    NSLog(@"min: %@", NSStringFromPoint(minPoint));
+    
+    for (NSValue *p in points) {
+        
+        svgStart = [svgStart stringByAppendingString:[svgObjects svgPointFromPoint:[p pointValue] minPoint:minPoint andMaxPoint:maxPoint]];
+
+    }
+    
+    svgStart = [svgStart stringByAppendingString:@"</svg>"];
+
+    return svgStart;
+
 }
+
+- (NSPoint)scaledPointFromPoint:(NSPoint)point min:(CGFloat)min andMax:(CGFloat)max {
+    
+    return NSMakePoint(1, 1);
+}
+
 @end
 
 

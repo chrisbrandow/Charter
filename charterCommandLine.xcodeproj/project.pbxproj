@@ -37,6 +37,7 @@
 		8362965B19A4683300272B77 /* CharterParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharterParser.m; sourceTree = "<group>"; };
 		83B610F719B0E495002C6D5C /* svgObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = svgObjects.h; sourceTree = "<group>"; };
 		83B610F819B0E495002C6D5C /* svgObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = svgObjects.m; sourceTree = "<group>"; };
+		83B610FD19B1141F002C6D5C /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +85,7 @@
 				8362964F19A4650300272B77 /* main.m */,
 				8362965A19A4683300272B77 /* CharterParser.h */,
 				8362965B19A4683300272B77 /* CharterParser.m */,
+				83B610FD19B1141F002C6D5C /* Readme */,
 				8362965319A4650300272B77 /* charterCommandLine.1 */,
 				8362965119A4650300272B77 /* Supporting Files */,
 			);

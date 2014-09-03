@@ -18,11 +18,11 @@ int main(int argc, const char * argv[])
         // insert code here...
         
         if (argv[1]) {
-            NSLog(@"includes an argument!");
+//            NSLog(@"includes an argument!");
             
             NSString *path = [NSString stringWithUTF8String:argv[1]];
             
-            NSLog(@"Path: %@", path);
+//            NSLog(@"Path: %@", path);
             
             NSError *error;
             NSString *fileStuff = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
